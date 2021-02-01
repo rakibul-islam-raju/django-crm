@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<section class="section">
+  <div class="d-flex justify-content-between">
+    <h4>Agents</h4>
+    <a href="{% url 'agent:agent-create' %}" class="btn btn-danger">Create New Agent</a>
+  </div>
+
+  <hr>
+
+  <div class="row mt-5">
+    {% for agent in agents %}
+    <div class="col-md-3">
+      <div class="card mb-3">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <img src="" alt="">
+          <h5>{{ agent.user }}</h5>
+          <a href="{{ agent.get_absolute_url }}">View Detail -></a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock body %}

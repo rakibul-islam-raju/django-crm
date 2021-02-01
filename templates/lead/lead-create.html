@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section>
+  <div class="row ">
+    <div class="col">
+    <h4 class="mb-4">Create New Lead</h4>
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="id_first_name" class="form-label">First Name</label>
+            <input type="text" class="form-control" name="first_name" id="id_first_name">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="id_last_name" class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="last_name" id="id_last_name">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="id_age" class="form-label">Age</label>
+            <input type="text" class="form-control" name="age" id="id_age">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="id_email" class="form-label">Email Address</label>
+            <input type="email" class="form-control" name="email" id="id_email">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="idid_phone_number_email" class="form-label">Phone Number</label>
+            <input type="number" class="form-control" name="phone_number" id="id_phone_number">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="id_description" class="form-label">Description</label>
+            <input type="text" class="form-control" name="description" id="id_description">
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-danger">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock body %}

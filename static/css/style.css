@@ -1,0 +1,15 @@
+section{
+    min-height: 70vh;
+}
+a{
+    color: #dc3545;
+}
+a:hover{
+    color: #a81928;
+}
+.dark-red{
+    color: #a81928;
+}
+.bg-dark-red{
+    background-color: #a81928;
+}

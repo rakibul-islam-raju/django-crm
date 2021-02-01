@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<section class="section">
+  <div class="d-flex justify-content-between">
+    <h4>Leads</h4>
+    <a href="{% url 'lead:lead-create' %}" class="btn btn-danger">Create New Lead</a>
+  </div>
+
+  <hr>
+
+  <div class="row mt-5">
+    {% for lead in leads %}
+    <div class="col-md-3">
+      <div class="card mb-3">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <img src="" alt="">
+          <h5>{{ lead.first_name|capfirst }} {{ lead.last_name|capfirst }}</h5>
+          <p>{{ lead.description }}</p>
+          <a href="{{ lead.get_absolute_url }}">View Detail -></a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock body %}

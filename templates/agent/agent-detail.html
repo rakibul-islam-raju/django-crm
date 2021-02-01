@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section>
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+                <a href="{% url 'agent:agent-list' %}" class="text-secondary"><- Back</a>
+            </div>
+            <div class="col-md-8">
+              <div class="d-flex justify-content-between">
+                <h4>{{ agent.user.first_name|capfirst }} {{ agent.user.first_name|capfirst }}</h4>
+                <a href="{{ agent.get_update_url }}" class="">Edit</a>
+              </div>
+              <table class="table ">
+                <tr>
+                  <th>Name</th>
+                  <td>{{ agent.user.first_name|capfirst }} {{ agent.user.first_name|capfirst }}</td>
+                </tr>
+                <tr>
+                  <th>Username</th>
+                  <td>{{ agent.user.username }}</td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>{{ agent.user.email }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock body %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section>
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+              <form action="" method="post">
+                {% csrf_token %}
+                <div class="d-flex justify-content-between">
+                </div>
+                <table class="table ">
+                  {{form}}
+                </table>
+                <div class="d-flex justify-content-between">
+                  <div class="">
+                    <a href="{{ lead.get_delete_url }}" class="btn btn-warning">Delete</a>
+                  </div>
+                  <div class="">
+                    <a href="{{ lead.get_absolute_url }}" class="btn btn-secondary mr-2">Cancel</a>
+                    <button type="submit" class="btn btn-danger">Save</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock body %}
