@@ -137,9 +137,9 @@ AUTH_USER_MODEL = 'authentication.User'
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# LOGIN_REDIRECT_URL = 'lead:lead-list'
+LOGIN_REDIRECT_URL = 'lead:lead-list'
 LOGOUT_REDIRECT_URL = 'landing-page'
-LOGIN_URL = 'auth:login'
+LOGIN_URL = 'login'
 
 # django messages
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'

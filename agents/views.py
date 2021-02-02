@@ -18,7 +18,6 @@ class AgentListView(OrganisorAndLoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         organization = self.request.user.userprofile
         return Agent.objects.filter(organization=organization)
-    
 
 
 class AgentCreateView(LoginRequiredMixin, generic.CreateView):

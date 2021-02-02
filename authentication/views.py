@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse
+from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login
@@ -25,10 +26,10 @@ class UserLoginView(View):
                     return redirect(reverse('lead:lead-list'))
                 else:
                     messages.error(request,'Account is not active.')
-                    return redirect(reverse('auth:login'))
+                    return redirect(reverse('login'))
             else:
                 messages.error(request,'Invalid Credentials.')
-                return redirect(reverse('auth:login'))
+                return redirect(reverse('login'))
         messages.error(request, 'Invalid form values.')
         return render(request, 'authentication/login.html')
 
@@ -36,48 +37,4 @@ class UserLoginView(View):
 class SignUpView(generic.CreateView):
     template_name = 'registration/signup.html'
     form_class = SignupForm
-    # def get(self, request, *args, **kwargs):
-    #     form = SignupForm()
-    #     context = {
-    #         'form': form
-    #     }
-
-    #     return render(request, 'registration/signup.html', context)
-
-    def post(self, request, *args, **kwargs):
-        form = SignupForm(request.POST or None)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = form.save(commit=False)
-            user.set_password(password)
-            user.save()
-            messages.success(request,f'Account successfully created for {username}')
-            user = authenticate(username=username, password=user.password)
-            login(request, user)
-            messages.success(request,f'Welcome {username}, You are now logged in.')
-            return redirect(reverse('lead:lead-list'))
-        else:
-            print(form.errors.as_data)
-            messages.success(request,f'Invalid form values.')
-        #     return redirect(reverse('auth:signup'))
-
-        return render(request, 'registration/signup.html')
-
-
-def signup(request):
-    if request.method == 'POST':
-        form = SignupForm(request.POST or None)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password')
-            form.save()
-            messages.success(request,f'Account successfully created for {username}')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            messages.success(request,f'Welcome {username}, You are now logged in.')
-            return redirect(reverse('lead:lead-list'))
-    else:
-        form = SignupForm()
-
-    return render(request, 'registration/signup.html', {'form': form})
+    success_url = reverse_lazy('lead:lead-list')

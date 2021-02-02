@@ -16,9 +16,9 @@
         {% endif %}
         <li class="nav-item ml-3">
           {% if user.is_authenticated %}
-          <a class="nav-link active btn bg-dark-red shadow-sm" href="{% url 'auth:logout' %}">Logout</a>
+          <a class="nav-link active btn bg-dark-red shadow-sm" href="{% url 'logout' %}">Logout</a>
           {% else %}
-          <a class="nav-link active btn bg-dark-red shadow-sm" href="{% url 'auth:login' %}">Login</a>
+          <a class="nav-link active btn bg-dark-red shadow-sm" href="{% url 'login' %}">Login</a>
           {% endif %}
         </li>
       </ul>
