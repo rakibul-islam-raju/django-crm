@@ -10,8 +10,8 @@
         {% csrf_token %}
         <div class="row">
           <div class="col-md-4 mb-3">
-            <label for="id_user" class="form-label">Agent</label>
-            {{ form.user }}
+            {% comment %} <label for="id_user" class="form-label">Agent</label> {% endcomment %}
+            {{ form|crispy }}
           </div>
         </div>
         <div class="d-flex justify-content-end">
