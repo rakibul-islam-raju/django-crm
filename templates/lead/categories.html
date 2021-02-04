@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<section class="section">
+
+  <div class="row justify-content-center mt-5">
+
+  <div class="d-flex justify-content-between">
+    <h4>Categories</h4>
+    {% comment %} <a href="{% url 'lead:lead-create' %}" class="btn btn-danger">Create New Lead</a> {% endcomment %}
+  </div>
+
+  <hr class="mt-2 mb-2">
+    <div class="col-md-8">
+    <table class="table table-hover table-bordered border-danger mt-4">
+        <thead class="bg-danger text-white">
+            <tr>
+                <th>Name</th>
+                <th>Leads</th>
+            </tr>
+        </thead>
+        <tbody class="text-success">
+            <tr class="text-primary">
+                <td>Unassigned</td>
+                <td>{{ unassigned_lead_count }}</td>
+            </tr>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>Leads</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+</section>
+
+{% endblock body %}

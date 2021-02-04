@@ -47,7 +47,6 @@ class LeadListView(LoginRequiredMixin, generic.ListView):
                 'unassigned_list': queryset
             })
         return context
-    
 
 
 class LeadDetailView(LoginRequiredMixin, generic.DetailView):
@@ -63,7 +62,7 @@ class LeadDetailView(LoginRequiredMixin, generic.DetailView):
         return queryset
 
 
-class LeadUpdateView(LoginRequiredMixin, generic.UpdateView):
+class LeadUpdateView(OrganisorAndLoginRequiredMixin, generic.UpdateView):
     template_name='lead/lead-update.html'
     form_class = LeadCreateForm
     context_object_name = 'lead'
@@ -72,7 +71,7 @@ class LeadUpdateView(LoginRequiredMixin, generic.UpdateView):
         return Lead.objects.filter(organization=self.request.user.userprofile)
 
 
-class LeadDeleteView(LoginRequiredMixin, generic.DeleteView):
+class LeadDeleteView(OrganisorAndLoginRequiredMixin, generic.DeleteView):
     template_name='delete.html'
     success_url = reverse_lazy('lead:lead-list')
 
@@ -98,3 +97,35 @@ class AssignAgentView(OrganisorAndLoginRequiredMixin, generic.FormView):
         lead.agent = agent
         lead.save()
         return super(AssignAgentView, self).form_valid(form)
+
+
+class CategoryListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'lead/categories.html'
+    context_object_name = 'categories'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        if user.is_organisor:
+            queryset = Lead.objects.filter(organization=user.userprofile)
+        else:
+            queryset = Lead.objects.filter(organization=user.agent.organization)
+        
+        context.update({
+            'unassigned_lead_count': queryset.filter(category__isnull=True).count()
+        })
+        return context
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_organisor:
+            queryset = Category.objects.filter(organization=user.userprofile)
+        else:
+            queryset = Category.objects.filter(organization=user.agent.organization)
+        return queryset
+
+
+# class CategoryDetailView(LoginRequiredMixin, generic.ListView):
+#     template_name = 'lead/categories.html'
+#     queryset = Category.objects.all()
+#     context_object_name = 'categories'
