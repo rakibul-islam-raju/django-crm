@@ -36,6 +36,19 @@ class LeadListView(LoginRequiredMixin, generic.ListView):
             queryset = Lead.objects.filter(agent=user.agent)
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_organisor:
+            queryset = Lead.objects.filter(
+                organization=self.request.user.userprofile,
+                agent__isnull=True
+            )
+            context.update({
+                'unassigned_list': queryset
+            })
+        return context
+    
+
 
 class LeadDetailView(LoginRequiredMixin, generic.DetailView):
     template_name='lead/lead-detail.html'
@@ -65,4 +78,23 @@ class LeadDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def get_queryset(self):
         return Lead.objects.filter(organization=self.request.user.userprofile)
-    
+
+
+class AssignAgentView(OrganisorAndLoginRequiredMixin, generic.FormView):
+    template_name = 'lead/agent-assign.html'
+    form_class = AssignAgentForm
+    success_url = reverse_lazy('lead:lead-list')
+
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(AssignAgentView, self).get_form_kwargs(**kwargs)
+        kwargs.update({
+            "request": self.request
+        })
+        return kwargs
+
+    def form_valid(self, form):
+        agent = form.cleaned_data['agent']
+        lead = Lead.objects.get(id=self.kwargs['pk'])
+        lead.agent = agent
+        lead.save()
+        return super(AssignAgentView, self).form_valid(form)

@@ -20,7 +20,7 @@ class AgentListView(OrganisorAndLoginRequiredMixin, generic.ListView):
         return Agent.objects.filter(organization=organization)
 
 
-class AgentCreateView(LoginRequiredMixin, generic.CreateView):
+class AgentCreateView(OrganisorAndLoginRequiredMixin, generic.CreateView):
     template_name = 'agent/agent-create.html'
     form_class = AgentCreateForm
     success_url = reverse_lazy('agent:agent-list')
@@ -44,7 +44,7 @@ class AgentCreateView(LoginRequiredMixin, generic.CreateView):
         return super(AgentCreateView, self).form_valid(form)
 
 
-class AgentDetailView(LoginRequiredMixin, generic.DetailView):
+class AgentDetailView(OrganisorAndLoginRequiredMixin, generic.DetailView):
     template_name = 'agent/agent-detail.html'
     context_object_name = 'agent'
 
@@ -57,7 +57,7 @@ class AgentDetailView(LoginRequiredMixin, generic.DetailView):
         )
 
 
-class AgentUpdateView(LoginRequiredMixin, generic.UpdateView):
+class AgentUpdateView(OrganisorAndLoginRequiredMixin, generic.UpdateView):
     template_name = 'agent/agent-update.html'
     context_object_name = 'agent'
     form_class = AgentCreateForm
@@ -71,7 +71,7 @@ class AgentUpdateView(LoginRequiredMixin, generic.UpdateView):
         )
 
 
-class AgentDeleteView(LoginRequiredMixin, generic.DeleteView):
+class AgentDeleteView(OrganisorAndLoginRequiredMixin, generic.DeleteView):
     template_name = 'delete.html'
 
     def get_object(self):
