@@ -7,7 +7,7 @@
   <div class="row justify-content-center mt-5">
 
   <div class="d-flex justify-content-between">
-    <h4>Categories</h4>
+    <h4>{{ category }}</h4>
     {% comment %} <a href="{% url 'lead:lead-create' %}" class="btn btn-danger">Create New Lead</a> {% endcomment %}
   </div>
 
@@ -16,23 +16,15 @@
     <table class="table table-hover table-bordered border-danger mt-4">
         <thead class="bg-danger text-white">
             <tr>
-                <th>Name</th>
                 <th>Leads</th>
+                <th>Agent</th>
             </tr>
         </thead>
         <tbody class="text-primary">
-            <tr class="text-secondary">
-                <td>
-                    <a class="text-secondary" href="{% url 'lead:uncategorised' %}">
-                        Uncategorised
-                    </a>
-                </td>
-                <td>{{ unassigned_lead_count }}</td>
-            </tr>
-            {% for category in categories %}
+            {% for lead in category.leads.all %}
             <tr>
-                <td><a class="text-primary" href="{% url 'lead:category-detail' category.pk %}">{{ category.name }}</a></td>
-                <td>Leads</td>
+                <td><a class="text-primary" href="{{ lead.get_absolute_url }}">{{ lead }}</a></td>
+                <td>{{ lead.agent }}</td>
             </tr>
             {% endfor %}
         </tbody>

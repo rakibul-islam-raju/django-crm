@@ -3,6 +3,7 @@ section{
 }
 a{
     color: #dc3545;
+    text-decoration: none;
 }
 a:hover{
     color: #a81928;

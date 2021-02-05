@@ -13,4 +13,6 @@ urlpatterns = [
     path('assign-agent/<int:pk>/', AssignAgentView.as_view(), name='agent-assign'),
 
     path('categories/', CategoryListView.as_view(), name='category-list'),
+    path('category/<int:pk>/', CategoryDetailView.as_view(), name='category-detail'),
+    path('category/uncategorised/', UnCategorisedLeads.as_view(), name='uncategorised'),
 ]

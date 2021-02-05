@@ -11,17 +11,22 @@
     <a href="{% url 'lead:lead-create' %}" class="btn btn-danger">Create New Lead</a>
   </div>
 
-  <hr class="mt-2 mb-2">
+  <hr class="mt-4 mb-5">
 
     {% for lead in leads %}
     <div class="col-md-3">
       <div class="card mb-3">
-        <img src="..." class="card-img-top" alt="...">
+        {% comment %} <img src="..." class="card-img-top" alt="..."> {% endcomment %}
         <div class="card-body">
+          {% if lead.category %}
+            <span class="badge bg-danger mb-2">{{ lead.category.name }}</span>
+          {% else %}
+            <span class="badge bg-secondary mb-2">Uncategorised</span>
+          {% endif %}
           <img src="" alt="">
           <h5>{{ lead.first_name|capfirst }} {{ lead.last_name|capfirst }}</h5>
           <p>{{ lead.description }}</p>
-          <a href="{{ lead.get_absolute_url }}">View Detail -></a>
+          <a class="stretched-link" href="{{ lead.get_absolute_url }}">View Detail <i class="fas fa-angle-right"></i></a>
         </div>
       </div>
     </div>
@@ -35,17 +40,22 @@
     <h4>Unassigned Leads</h4>
   </div>
 
-  <hr class="mt-2 mb-2">
+  <hr class="mt-4 mb-5">
 
     {% for lead in unassigned_list %}
     <div class="col-md-3">
       <div class="card mb-3">
-        <img src="..." class="card-img-top" alt="...">
+        {% comment %} <img src="..." class="card-img-top" alt="..."> {% endcomment %}
         <div class="card-body">
+          {% if lead.category %}
+            <span class="badge bg-danger mb-2">{{ lead.category.name }}</span>
+          {% else %}
+            <span class="badge bg-secondary mb-2">Uncategorised</span>
+          {% endif %}
           <img src="" alt="">
           <h5>{{ lead.first_name|capfirst }} {{ lead.last_name|capfirst }}</h5>
           <p>{{ lead.description }}</p>
-          <a href="{% url 'lead:agent-assign' lead.pk %}">Assign Agent -></a>
+          <a class="stretched-link" href="{% url 'lead:agent-assign' lead.pk %}">Assign Agent -></a>
         </div>
       </div>
     </div>

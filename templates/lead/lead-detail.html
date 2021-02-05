@@ -9,12 +9,21 @@
           <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-8">
+              {% if lead.category %}
+                <span class="badge bg-danger mb-2">
+                  <a class="text-white" href="{% url 'lead:category-detail' lead.category.id %}">
+                    {{ lead.category.name }}
+                  </a>
+                </span>
+              {% else %}
+                <span class="badge bg-secondary mb-2">Uncategorised</span>
+              {% endif %}
               <div class="d-flex justify-content-between">
                 <h4>{{ lead.first_name|capfirst }} {{ lead.last_name|capfirst }}</h4>
                 <a href="{{ lead.get_update_url }}" class="">Edit</a>
               </div>
               <p>{{ lead.description }}</p>
-              <table class="table ">
+              <table class="table table-hover">
                 <tr>
                   <th>Age</th>
                   <td>{{ lead.age }}</td>

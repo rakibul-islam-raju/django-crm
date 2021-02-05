@@ -14,7 +14,7 @@ class LandingPageView(generic.TemplateView):
     template_name = 'landing-page.html'
 
 
-class LeadCreateView(OrganisorAndLoginRequiredMixin, generic.CreateView):
+class LeadCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = LeadCreateForm
     template_name = 'lead/lead-create.html'
     success_url = reverse_lazy('lead:lead-list')
@@ -58,7 +58,7 @@ class LeadDetailView(LoginRequiredMixin, generic.DetailView):
         if user.is_organisor:
             queryset = Lead.objects.filter(organization=user.userprofile)
         else:
-            queryset = Lead.objects.filter(agent=user.agent)
+            queryset = Lead.objects.filter(organization=user.agent.organization)
         return queryset
 
 
@@ -125,7 +125,59 @@ class CategoryListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-# class CategoryDetailView(LoginRequiredMixin, generic.ListView):
-#     template_name = 'lead/categories.html'
-#     queryset = Category.objects.all()
-#     context_object_name = 'categories'
+class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
+    template_name = 'lead/categoriy-detail.html'
+    context_object_name = 'category'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context.update({
+    #         'leads': self.get_object().leads.all()
+    #     })
+    #     return context
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_organisor:
+            queryset = Category.objects.filter(organization=user.userprofile)
+        else:
+            queryset = Category.objects.filter(organization=user.agent.organization)
+        return queryset
+
+
+# TODO: Category update view
+
+
+class UnCategorisedLeads(LoginRequiredMixin, generic.ListView):
+    template_name = 'lead/uncategorised-leads.html'
+    context_object_name = 'leads'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     user = self.request.user
+    #     if user.is_organisor:
+    #         queryset = Lead.objects.filter(organization=user.userprofile)
+    #     else:
+    #         queryset = Lead.objects.filter(organization=user.agent.organization)
+        
+    #     context.update({
+    #         'unassigned_lead_count': queryset.filter(category__isnull=True).count()
+    #     })
+    #     return context
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_organisor:
+            queryset = Lead.objects.filter(organization=user.userprofile)
+        else:
+            queryset = Lead.objects.filter(organization=user.agent.organization)
+
+        # user = self.request.user
+        # if user.is_organisor:
+        #     queryset = Lead.objects.filter(organization=user.userprofile)
+        # else:
+        #     queryset = Lead.objects.filter(agent=user.agent)
+
+        queryset = queryset.filter(category__isnull=True)
+        
+        return queryset

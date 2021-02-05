@@ -8,7 +8,8 @@ class LeadCreateForm(forms.ModelForm):
         model = Lead
         exclude = [
             'agent',
-            'date_added'
+            'date_added',
+            'organization',
         ]
 
 
